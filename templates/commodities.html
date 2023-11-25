@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commodities</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Commodities and Highest Bids</h1>
+
+    <table>
+        <tr>
+            
+            <th>Commodity Name</th>
+            
+            <th>Highest Bid</th>
+        </tr>
+        {% for commodity in commodities %}
+            <tr>
+                
+                <td>{{ commodity.commodity_name }}</td>
+                
+             
+                <td>{{ commodity.highest_bid }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+{% endblock %}

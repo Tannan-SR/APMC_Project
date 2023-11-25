@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block content %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quality Assessment</title>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f4f4f4;
+                margin: 20px;
+                text-align: center;
+            }
+    
+            h1 {
+                color: #333;
+            }
+    
+            table {
+                width: 80%;
+                margin: 20px auto;
+                border-collapse: collapse;
+            }
+    
+            th, td {
+                border: 1px solid #ddd;
+                padding: 12px;
+            }
+    
+            th {
+                background-color: #4CAF50;
+                color: white;
+            }
+    
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+    
+            p {
+                color: #888;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Quality Assessment</h1>
+    
+        {% if quality_assessment %}
+            <table border="1">
+                <tr>
+                    <th>Commodity Name</th>
+                    <th>Quality Score</th>
+                    <th>Comments</th>
+                </tr>
+                {% for assessment in quality_assessment %}
+                    <tr>
+                        <td>{{ assessment['name_commodity'] }}</td>
+                        <td>{{ assessment['quality_score'] }}</td>
+                        <td>{{ assessment['comments'] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No quality assessments available.</p>
+        {% endif %}
+    </body>
+{% endblock %}

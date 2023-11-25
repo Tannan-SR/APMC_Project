@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Market Details{% endblock %}
+{% block content %}
+    <!-- Admin-specific content goes here -->
+    
+    <h3>Explore APMC Market: Your Premier Destination for Convenience and Quality Services</h3>
+    {% block table_content %}
+        {{ get_table('market') | safe }}
+    {% endblock %}
+    <!-- Dropdown for selecting tables -->
+    <form action="{{ url_for('market_details') }}" method="post">
+        <label for="tableSelect">Select Market:</label>
+        <select id="tableSelect" name="selected_market">
+            <option value="1" {% if selected_table == '1' %}selected{% endif %}>1</option>
+            <option value="2" {% if selected_table == '2' %}selected{% endif %}>2</option>
+            <option value="3" {% if selected_table == '3' %}selected{% endif %}>3</option>
+            <option value="4" {% if selected_table == '4' %}selected{% endif %}>4</option>
+            <option value="5" {% if selected_table == '5' %}selected{% endif %}>5</option>
+            <!-- Add more options for other tables -->
+        </select>        
+        <input type="submit" value="Load Market">
+    </form>
+    
+    <!-- Display the selected table content -->
+    {% if selected_market %}
+        <h4>Table: {{ selected_market }}</h4>
+        {% set market_rc =  get_market_details(selected_market) %}
+        {% with rows=market_rc[0], cols=market_rc[1] %}
+            {% include 'print_table_base_2.html' %}
+        {% endwith %}
+    {% endif %}
+{% endblock %}

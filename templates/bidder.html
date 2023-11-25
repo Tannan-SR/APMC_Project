@@ -1,0 +1,142 @@
+
+{% extends 'base.html' %}
+{% block content %}
+  <!DOCTYPE html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Traders and Commodities for Market</title>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f5f5f5;
+                margin: 20px;
+            }
+    
+            h1 {
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+         }
+ 
+            form {
+                margin-bottom: 20px;
+            }
+    
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: #555;
+            }
+    
+            input {
+                padding: 8px;
+                width: 200px;
+                margin-bottom: 10px;
+                box-sizing: border-box;
+            }
+    
+            button {
+                padding: 10px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+    
+            button:hover {
+                background-color: #b8edbb;
+            }
+    
+            h2 {
+                color: #333;
+            }
+    
+            h3 {
+                color: #4CAF50;
+            }
+    
+            ul {
+                list-style-type: none;
+                padding: 0;
+            }
+    
+            li {
+                background-color: white;
+                padding: 15px;
+                margin-bottom: 10px;
+                border-radius: 5px;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            }
+    
+            strong {
+                color: #333;
+            }
+    
+            p {
+                color: #777;
+            }
+        </style>
+    </head>
+    
+    
+  <body>
+      <h1 class="text-center">Bids</h1>
+  
+      <form method="post" action="{{ url_for('bidder') }}">
+          <label for="market_id">Enter Market ID:</label>
+          <input type="text" name="market_id" required>
+          <button type="submit">Fetch Traders and Commodities</button>
+      </form>
+
+      
+  
+      {% if traders_commodities %}
+          <h2>Traders and Commodities:</h2>
+          {% for trader in traders_commodities|groupby(1) %}
+              <h3>Trader: {{ trader[1][0][1] }} {{ trader[1][0][2] }}</h3>
+              <ul>
+                  {% for item in trader[1] %}
+                      <li>
+                          <strong>Commodity ID:</strong> {{ item[3] }}<br>
+                          <strong>Commodity Name:</strong> {{ item[4] }}<br>
+                          <strong>Description:</strong> {{ item[5] }}<br>
+                          <strong>Available Quantity:</strong> {{ item[6] }}<br>
+                          
+                          
+
+                          <!-- Add a form to allow bidding for this commodity and trader -->
+                          <form method="post" action="{{ url_for('place_bid_route') }}">
+                              <input type="hidden" name="market_id" value="{{ market_id }}" id="market_id">
+                              <input type="hidden" name="trader_id" value="{{ item[0] }}" id ="trader_id">
+                              <input type="hidden" name="commodity_id" value="{{ item[3] }}" id ="commodity_id">
+                              
+                              <label for="bid_amount">Enter Bid Amount(/Kg):</label>
+                              <input type="text" name="bid_amount" required>
+                              <label for="bid_quantity">Enter Bid Quantity(in Kg):</label>
+                              <input type="text" name="bid_quantity" required>
+                              <button type="submit">Place Bid</button>
+
+
+                              
+                          </form>
+                          <form method="post" action="{{ url_for('highest_commodity') }}">
+                            <!-- Use the stored commodity_id in this form -->
+                            <input type="hidden" name="other_field" value="some_value">
+                            <input type="hidden" name="commodity_id_in_another_form" value="{{item[3]}}" id="commodity_id_in_another_form">
+                            <button type="submit">Check Highest bid</button>
+                        </form>
+                      </li>
+                  {% endfor %}
+              </ul>
+          {% endfor %}
+      {% else %}
+          <p>No traders and commodities available for the specified market.</p>
+      {% endif %}
+      
+
+  </body>
+{% endblock %}
+  

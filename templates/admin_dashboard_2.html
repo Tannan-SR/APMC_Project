@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            width: 80%;
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: #fff url('arrow-down.png') no-repeat right center;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+    </style>
+</head>
+
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+    <!-- Admin-specific content goes here -->
+    
+    <h1>Welcome, {{ fname }} {{ lname }}! You are logged in as {{ role }}.</h1>
+    
+    <!-- Dropdown for selecting tables -->
+    <form action="{{ url_for('admin_dashboard') }}" method="post">
+        <label for="tableSelect">Select Table:</label>
+        <select id="tableSelect" name="selected_table">
+            <option value="commodity" {% if selected_table == 'commodity' %}selected{% endif %}>Commodity</option>
+            <option value="farmer" {% if selected_table == 'farmer' %}selected{% endif %}>Farmer</option>
+            <option value="market" {% if selected_table == 'market' %}selected{% endif %}>Market</option>
+            <option value="payment" {% if selected_table == 'payment' %}selected{% endif %}>Payment</option>
+            <option value="quality_assessment" {% if selected_table == 'quality_assessment' %}selected{% endif %}>Quality Assessment</option>
+            <option value="trader" {% if selected_table == 'trader' %}selected{% endif %}>Trader</option>
+            <option value="transaction" {% if selected_table == 'transaction' %}selected{% endif %}>Transaction</option>
+            <option value="users" {% if selected_table == 'users' %}selected{% endif %}>Users</option>
+            <!-- Add more options for other tables -->
+        </select>
+        <center><input type="submit" value="Load Table"></center>
+    </form>
+    
+    <!-- Display the selected table content -->
+    {% if selected_table %}
+        <h2>Table: {{ selected_table }}</h2>
+        {{ get_table(selected_table) | safe }}
+    {% endif %}
+{% endblock %}
+
+
+</html>

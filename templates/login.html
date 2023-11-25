@@ -1,0 +1,60 @@
+<!-- 
+
+<form action="/login", method="post">
+    <label>Enter First Name:</label>
+    <input type="text" name = "first_name" /><br/>
+    <label>Enter Last Name:</label>
+    <input type="text" name = "last_name" /><br/>
+    <input type="submit" value="submit" /><br/>
+</form>
+ -->
+ {% extends "base.html" %}
+ {% block title %}APMC Login{% endblock %}
+ {% block content %}
+ <style>
+    body {
+        background-image: url(''); /* Replace 'your-background-image.jpg' with your actual image path */
+        background-size: cover;
+        background-position: center;
+    }
+
+    .container {
+        margin: 0 auto; /* Center the container horizontally */
+        padding: 20px;
+        margin-top: 50px; /* Adjust the top margin as needed */
+        background-image: url('https://media.istockphoto.com/id/1346294714/photo/biochemistry-concept-virtual-reality.jpg?s=612x612&w=0&k=20&c=UbnPG28BOsN1iJSqUFPWq-F18Tq5GoUOwFoCBY3OWJ0='); /* Replace 'your-background-image.jpg' with your actual image path */
+        background-size: cover;
+        border-radius: 10px;
+        
+    }
+    
+
+</style>
+     <div class="container mt-5">
+         <div class="row justify-content-center">
+             <div class="col-md-6">
+                 <div class="card">
+                     <div class="card-header bg-success text-white text-center">
+                         <h2>Login</h2>
+                     </div>
+                     <div class="card-body">
+                         <form action="/login" method="post">
+                             <div class="mb-3">
+                                 <label for="first_name" class="form-label" >Enter First Name:</label>
+                                 <input type="text" name="first_name" class="form-control" autocomplete="off" required>
+                             </div>
+                             <div class="mb-3">
+                                 <label for="last_name" class="form-label" >Enter Last Name:</label>
+                                 <input type="text" name="last_name" class="form-control" autocomplete="off" required>
+                             </div>
+                             <div class="text-center">
+                                 <button type="submit" class="btn btn-success">Submit</button>
+                             </div>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ {% endblock %}
+ 

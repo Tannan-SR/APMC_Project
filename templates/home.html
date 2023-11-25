@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <style>
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .featured-products {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .featured-card {
+            flex: 1;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .featured-card img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .call-to-action {
+            text-align: center;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+    <div class="welcome-section">
+        <h2>Welcome to APMC Market</h2>
+        <p>Explore a wide range of agricultural products and services at your convenience.</p>
+        <p>Quality produce, transparent transactions, and a seamless experience await you!</p>
+    </div>
+
+    <div class="featured-products">
+        <div class="featured-card">
+            <img src="https://media.istockphoto.com/id/1280856062/photo/variety-of-fresh-organic-vegetables-and-fruits-in-the-garden.jpg?s=612x612&w=0&k=20&c=KoF5Ue-g3wO3vXPgLw9e2Qzf498Yow7WGXMSCNz7O60=" alt="Fresh Fruits">
+            <h3>Fresh Fruits and Vegetables</h3>
+            <p>Locally sourced, ripe and ready for you.</p>
+        </div>
+        <div class="featured-card">
+            <img src="https://media.istockphoto.com/id/514628700/photo/top-view-of-various-legumes-with-cookware.jpg?s=612x612&w=0&k=20&c=VZlKafmGiYphOOMqbu-mVK3MsxZCY1yuhlKPZPqtIBQ=" alt="Grains and Pulses">
+            <h3>Grains and Pulses</h3>
+            <p>Healthy and nutritious grains for your daily needs.</p>
+        </div>
+        <div class="featured-card">
+            <img src="https://media.istockphoto.com/id/910881428/photo/dairy-products-shot-on-rustic-wooden-table.jpg?s=612x612&w=0&k=20&c=Xh_dDL7XsV0Rff_aIrLOQJ1ZoapugiatmXUxWdo7q2s=" alt="Dairy and Poultry">
+            <h3>Dairy and Poultry</h3>
+            <p>Fresh dairy products and high-quality poultry items.</p>
+        </div>
+    </div>
+
+    <div class="call-to-action">
+        <p>Ready to discover the best in agricultural offerings?</p>
+        <a href="{{ url_for('market_details') }}" class="cta-button">Explore Now</a>
+    </div>
+{% endblock %}

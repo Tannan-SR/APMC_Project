@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+    {% extends "base.html" %}
+
+    {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Transaction</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .category-card {
+            max-width: none; /* Remove the max-width property */
+            width: 150px; /* Set the width to make them squarer */
+            height: 150px; /* Set the height to make them squarer */
+            margin: 10px; /* Add a small margin between cards */
+            background-color: #4CAF50; /* Green color */
+            color: #fff; /* White text color */
+            padding: 20px;
+            border-radius: 10px; /* Make the cards more rounded */
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex; /* Use flex container */
+            flex-direction: column; /* Stack child elements vertically */
+            justify-content: center; /* Center vertically */
+            transition: border 0.3s ease-in-out; /* Added ease-in-out for a smoother transition */
+            border: 2px solid transparent; 
+        }
+
+        .category-card:hover {
+            border: 2px solid #006400;
+        }
+
+        form {
+            width: 80%; /* Increased width of the form */
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px; /* Increased border-radius for rounded edges */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2; /* Increased z-index to appear above the overlay */
+            overflow-y: auto;
+            max-height: 80%;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+            z-index: 1;
+            display: none;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333; /* Updated label color for consistency */
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: url('arrow-down.png') no-repeat right center;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        button {
+            background-color: #777;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .action-form {
+            text-align: center;
+        }
+
+        .category-card-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+            place-content: center;
+            margin-left: 20%; /* Adjust the left margin as needed */
+        }
+
+        textarea::placeholder {
+        font-family: 'Arial', sans-serif; /* Match the font family with the rest */
+        }
+
+        .form_header {
+        color: #fff; /* White text color */
+        background-color: #4CAF50; /* Matching green background color */
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: normal;
+        }       
+
+    </style>
+</head>
+
+<body>
+    <h1>Record Transaction</h1>
+
+    <!-- Category Cards -->
+    <div class="category-card-container">
+        <div class="category-card" onclick="showForm()">Record New Transaction</div>
+        <div class="category-card" onclick="redirectTo('/transactions')">View Transactions</div>
+        <div class="category-card" onclick="redirectTo('/payment')">View Payment Info</div>
+        <div class="category-card" onclick="redirectTo('/quality_assessment')">View Quality Info</div>
+    </div>
+
+    <!-- Dark Overlay -->
+    <div class="overlay" id="overlay" onclick="hideForm()"></div>
+
+    <!-- Record Transaction Form -->
+    <form method="post" action="{{ url_for('trader') }}" id="recordTransactionForm">
+        <h2 class = 'form_header'><center>New Transaction</center></h2>
+        <!-- The existing form content goes here -->
+        <label for="market_id">Market ID:</label>
+        <input type="text" name="market_id" placeholder="Enter Market ID" required>
+
+        <label for="farmer_name">Farmer Name:</label>
+        <input type="text" name="farmer_name" placeholder="Enter Farmer Name" required>
+
+        <label for="commodity_id">Commodity ID:</label>
+        <input type="text" name="commodity_id" placeholder="Enter Commodity ID" required>
+
+        <label for="commodity_name">Commodity Name:</label>
+        <input type="text" name="commodity_name" placeholder="Enter Commodity Name" required>
+
+        <label for="quantity">Quantity:</label>
+        <input type="text" name="quantity" placeholder="Enter Quantity" required>
+
+        <label for="quality">Quality:</label>
+        <input type="text" name="quality" placeholder="Enter Quality" required>
+
+        <label for="description">Description:</label>
+        <textarea name="description" placeholder="Enter Description" required></textarea>
+
+        <!-- Enter Bid Price Option -->
+        <label for="commodity_price">Commodity Price:</label>
+        <input type="text" name="commodity_price" placeholder="Enter Commodity Price" required>
+
+        <input type="hidden" name="transaction_date" value="">
+        <div class="action-form">
+            <input type="submit" value="Record Transaction">
+        </div>
+        <!-- Add a button to close the form -->
+        <button type="button" onclick="hideForm()">Close Form</button>
+    </form>
+
+    <script>
+        function redirectTo(url) {
+            window.location.href = url;
+        }
+
+        function showForm() {
+            document.getElementById('recordTransactionForm').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function hideForm() {
+            document.getElementById('recordTransactionForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+    <!-- Admin-specific content goes here -->
+    
+    <h1>Welcome, {{ fname }} {{ lname }}! You are logged in as {{ role }}.</h1>
+    
+    <!-- Dropdown for selecting tables -->
+    <form action="{{ url_for('admin_dashboard') }}" method="post">
+        <label for="tableSelect">Select Table:</label>
+        <select id="tableSelect" name="selected_table">
+            <option value="commodity" {% if selected_table == 'commodity' %}selected{% endif %}>Commodity</option>
+            <option value="farmer" {% if selected_table == 'farmer' %}selected{% endif %}>Farmer</option>
+            <option value="market" {% if selected_table == 'market' %}selected{% endif %}>Market</option>
+            <option value="payment" {% if selected_table == 'payment' %}selected{% endif %}>Payment</option>
+            <option value="quality_assessment" {% if selected_table == 'quality_assessment' %}selected{% endif %}>Quality Assessment</option>
+            <option value="trader" {% if selected_table == 'trader' %}selected{% endif %}>Trader</option>
+            <option value="transaction" {% if selected_table == 'transaction' %}selected{% endif %}>Transaction</option>
+            <option value="users" {% if selected_table == 'users' %}selected{% endif %}>Users</option>
+            <!-- Add more options for other tables -->
+        </select>        
+        <input type="submit" value="Load Table">
+    </form>
+    
+    <!-- Display the selected table content -->
+    {% if selected_table %}
+        <h2>Table: {{ selected_table }}</h2>
+        {{ get_table(selected_table) | safe }}
+    {% endif %}
+{% endblock %}

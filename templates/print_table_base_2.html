@@ -1,0 +1,46 @@
+<!-- {% block table_content %} -->
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        border: 2px solid #4CAF50;
+    }
+
+    th, td {
+        border: 2px solid #4CAF50;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: #fff;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+</style>
+
+<table class="table" name="{{ table_name }}">
+    <thead>
+        <tr>
+            {% for col in cols %}
+            <th scope="col">{{ col }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        <tr>
+            {% for value in row %}
+            <td>
+                {{ value }}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<!-- {% endblock %} -->
